@@ -4,6 +4,7 @@ import com.taxah.jj.dz4.entity.Course;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -49,6 +50,30 @@ public class DB implements AutoCloseable {
             System.out.println("    Get course: " + workWithCourse);
             session.close();
             return workWithCourse;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Retrieves a Course record from the Courses table based on the provided ID.
+     *
+     * @param title The title of the list Courses to be retrieved.
+     * @return The Courses list object retrieved from the database by title.
+     */
+    public List<Course> getCourseListByTitle(String title) {
+        try (Session session = factory.getCurrentSession()) {
+            //Get
+            session.beginTransaction();
+            String hql = "FROM Course WHERE title = :courseTitle";
+            Query<Course> query = session.createQuery(hql, Course.class);
+            query.setParameter("courseTitle", title);
+
+            // Получите результат в виде списка
+            List<Course> courses = query.getResultList();
+            session.getTransaction().commit();
+            return courses;
         } catch (Exception e) {
             e.printStackTrace();
         }

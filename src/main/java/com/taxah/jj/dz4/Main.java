@@ -57,6 +57,8 @@ public class Main {
 
             // Display all remaining courses in the Courses table after deletion
             dataBase.getAllCourses().forEach(System.out::println);
+
+            System.out.println("Select by title = " + dataBase.getCourseListByTitle("IoT"));
             System.out.println("=================================================================================" +
                     "====================================================");
         } catch (Exception e) {
