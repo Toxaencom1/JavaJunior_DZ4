@@ -99,6 +99,31 @@ public class DB implements AutoCloseable {
     }
 
     /**
+     * Retrieves a Course record from the Courses table based on the provided ID.
+     *
+     * @param title The title of the list Courses to be retrieved.
+     * @return The Courses list object retrieved from the database by title.
+     */
+    public Course getFirstCourseByTitle(String title) {
+        try (Session session = factory.getCurrentSession()) {
+            //Get
+            session.beginTransaction();
+            String hql = "FROM Course WHERE title = :courseTitle";
+            Query<Course> query = session.createQuery(hql, Course.class);
+            query.setParameter("courseTitle", title);
+
+            // Получите результат в виде списка
+            List<Course> courses = query.getResultList();
+            session.getTransaction().commit();
+            if(!courses.isEmpty())
+                return courses.get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * Updates the duration of a Course record in the Courses table.
      *
      * @param course   The Course object to be updated.

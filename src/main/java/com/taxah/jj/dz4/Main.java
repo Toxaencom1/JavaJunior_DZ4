@@ -59,6 +59,7 @@ public class Main {
             dataBase.getAllCourses().forEach(System.out::println);
 
             System.out.println("Select by title = " + dataBase.getCourseListByTitle("IoT"));
+            System.out.println("Select first by title = " + dataBase.getFirstCourseByTitle("Java"));
             System.out.println("=================================================================================" +
                     "====================================================");
         } catch (Exception e) {
